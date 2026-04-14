@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoang. | Minimalist Photography Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    },
+                    transitionDuration: {
+                        '400': '400ms',
+                        '800': '800ms',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS cho Animation và Shadcn aesthetics -->
+    <style>
+        /* Fade-in Animation Classes */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Tôn trọng cài đặt giảm chuyển động của hệ điều hành */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in-section {
+                opacity: 1;
+                transform: none;
+                transition: none !important;
+            }
+            html {
+                scroll-behavior: auto !important;
+            }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Tùy chỉnh Scrollbar cho Modal */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-950 dark:bg-slate-950 dark:text-slate-50 selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-800 dark:selection:text-slate-50 font-sans font-light antialiased transition-colors duration-500 min-h-screen overflow-x-hidden">
+
+    <!-- HEADER -->
+    <header class="w-full px-6 md:px-12 lg:px-24 py-8 md:py-12 flex justify-between items-center z-10 relative">
+        <a href="#top" class="font-serif text-2xl md:text-3xl tracking-wide cursor-pointer hover:opacity-70 transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-sm inline-block">
+            Hoang.
+        </a>
+        
+        <div class="flex items-center gap-6 md:gap-12">
+            <nav class="hidden md:flex gap-8 text-sm tracking-widest uppercase font-medium">
+                <a href="#work" class="text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-50 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-sm py-1">Work</a>
+                <a href="#about" class="text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-50 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-sm py-1">About</a>
+                <a href="#contact" class="text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-50 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-sm py-1">Contact</a>
+            </nav>
+            
+            <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-2 -mr-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-950 dark:hover:text-slate-50 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950">
+                <svg id="theme-toggle-dark-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="top" class="px-6 md:px-12 lg:px-24 py-24 md:py-40 flex flex-col items-center justify-center text-center">
+        <h1 class="fade-in-section font-serif text-5xl md:text-7xl lg:text-8xl font-light tracking-tight max-w-4xl leading-[1.1] mb-8" style="transition-delay: 0ms;">
+            Nhiếp ảnh là cách để <br class="hidden md:block"/> giữ lại những khoảng lặng.
+        </h1>
+        <p class="fade-in-section max-w-lg mx-auto text-sm md:text-base leading-relaxed tracking-wide text-slate-600 dark:text-slate-400" style="transition-delay: 200ms;">
+            Một danh mục các tác phẩm tập trung vào sự tối giản, kiến trúc, và những khoảnh khắc tĩnh tại của thời gian.
+        </p>
+    </section>
+
+    <!-- MAIN WORKS -->
+    <main id="work" class="w-full flex flex-col gap-32 md:gap-48 pb-32">
+        
+        <!-- SERIES 01 -->
+        <article id="about" class="px-6 md:px-12 lg:px-24 w-full flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+            <!-- Text & Sub Image -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-12">
+                <div class="flex flex-col gap-4">
+                    <span class="fade-in-section text-xs tracking-[0.2em] font-medium text-slate-500 dark:text-slate-400" style="transition-delay: 0ms;">01 — 2025</span>
+                    <h2 class="fade-in-section font-serif text-4xl lg:text-5xl font-normal leading-tight" style="transition-delay: 100ms;">Sự Tĩnh Lặng Của Bóng Đổ</h2>
+                    <p class="fade-in-section text-sm leading-loose mt-4 text-slate-600 dark:text-slate-400" style="transition-delay: 200ms;">
+                        Có những khoảng trống mang sức nặng hơn cả những vật thể hiện hữu. Series này đi tìm sự cân bằng giữa ánh sáng và phần khuất lấp trong không gian đô thị.
+                    </p>
+                    <button onclick="openAlbum('01')" class="fade-in-section mt-8 group flex items-center gap-3 text-xs tracking-widest uppercase font-medium border-b border-transparent pb-1 transition-all duration-300 cursor-pointer text-slate-950 dark:text-slate-50 hover:border-slate-950 dark:hover:border-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-t-sm w-fit" style="transition-delay: 300ms;">
+                        Xem trọn bộ ảnh
+                        <svg class="group-hover:translate-x-1 transition-transform duration-300 motion-reduce:transition-none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <!-- Sub Image -->
+                <div onclick="openAlbum('01')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Sự Tĩnh Lặng Của Bóng Đổ" class="fade-in-section hidden lg:block w-full overflow-hidden relative group cursor-pointer h-64 bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950" style="transition-delay: 400ms;">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800" alt="Sự Tĩnh Lặng Của Bóng Đổ context" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                </div>
+            </div>
+            <!-- Main Image -->
+            <div onclick="openAlbum('01')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Sự Tĩnh Lặng Của Bóng Đổ" class="fade-in-section w-full lg:w-2/3 h-[50vh] lg:h-[80vh] overflow-hidden relative group cursor-pointer bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950">
+                <img src="https://images.unsplash.com/photo-1490604001847-b712b0c2f967?auto=format&fit=crop&q=80&w=1600" alt="Sự Tĩnh Lặng Của Bóng Đổ" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                <div class="absolute inset-0 transition-colors duration-500 pointer-events-none bg-slate-950/0 group-hover:bg-slate-950/5 dark:group-hover:bg-slate-50/5"></div>
+            </div>
+        </article>
+
+        <!-- SERIES 02 -->
+        <article class="px-6 md:px-12 lg:px-24 w-full flex flex-col lg:flex-row-reverse gap-12 lg:gap-24 items-center">
+            <!-- Text & Sub Image -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-12">
+                <div class="flex flex-col gap-4">
+                    <span class="fade-in-section text-xs tracking-[0.2em] font-medium text-slate-500 dark:text-slate-400" style="transition-delay: 0ms;">02 — 2024</span>
+                    <h2 class="fade-in-section font-serif text-4xl lg:text-5xl font-normal leading-tight" style="transition-delay: 100ms;">Những Đường Nét Khuyết</h2>
+                    <p class="fade-in-section text-sm leading-loose mt-4 text-slate-600 dark:text-slate-400" style="transition-delay: 200ms;">
+                        Chấp nhận sự không hoàn hảo. Một góc nhìn khác về những kết cấu dang dở, nơi thời gian để lại dấu ấn của riêng mình trên từng bề mặt.
+                    </p>
+                    <button onclick="openAlbum('02')" class="fade-in-section mt-8 group flex items-center gap-3 text-xs tracking-widest uppercase font-medium border-b border-transparent pb-1 transition-all duration-300 cursor-pointer text-slate-950 dark:text-slate-50 hover:border-slate-950 dark:hover:border-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-t-sm w-fit" style="transition-delay: 300ms;">
+                        Xem trọn bộ ảnh
+                        <svg class="group-hover:translate-x-1 transition-transform duration-300 motion-reduce:transition-none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <!-- Sub Image -->
+                <div onclick="openAlbum('02')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Những Đường Nét Khuyết" class="fade-in-section hidden lg:block w-full overflow-hidden relative group cursor-pointer h-64 bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950" style="transition-delay: 400ms;">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800" alt="Những Đường Nét Khuyết context" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                </div>
+            </div>
+            <!-- Main Image -->
+            <div onclick="openAlbum('02')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Những Đường Nét Khuyết" class="fade-in-section w-full lg:w-2/3 h-[50vh] lg:h-[80vh] overflow-hidden relative group cursor-pointer bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950">
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=1600" alt="Những Đường Nét Khuyết" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                <div class="absolute inset-0 transition-colors duration-500 pointer-events-none bg-slate-950/0 group-hover:bg-slate-950/5 dark:group-hover:bg-slate-50/5"></div>
+            </div>
+        </article>
+
+        <!-- SERIES 03 -->
+        <article class="px-6 md:px-12 lg:px-24 w-full flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+            <!-- Text & Sub Image -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-12">
+                <div class="flex flex-col gap-4">
+                    <span class="fade-in-section text-xs tracking-[0.2em] font-medium text-slate-500 dark:text-slate-400" style="transition-delay: 0ms;">03 — 2024</span>
+                    <h2 class="fade-in-section font-serif text-4xl lg:text-5xl font-normal leading-tight" style="transition-delay: 100ms;">Rìa Của Ánh Sáng</h2>
+                    <p class="fade-in-section text-sm leading-loose mt-4 text-slate-600 dark:text-slate-400" style="transition-delay: 200ms;">
+                        Khoảnh khắc trước khi màn đêm buông xuống. Ranh giới mong manh giữa cái thấy được và những gì bị che khuất.
+                    </p>
+                    <button onclick="openAlbum('03')" class="fade-in-section mt-8 group flex items-center gap-3 text-xs tracking-widest uppercase font-medium border-b border-transparent pb-1 transition-all duration-300 cursor-pointer text-slate-950 dark:text-slate-50 hover:border-slate-950 dark:hover:border-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-t-sm w-fit" style="transition-delay: 300ms;">
+                        Xem trọn bộ ảnh
+                        <svg class="group-hover:translate-x-1 transition-transform duration-300 motion-reduce:transition-none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <!-- Sub Image -->
+                <div onclick="openAlbum('03')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Rìa Của Ánh Sáng" class="fade-in-section hidden lg:block w-full overflow-hidden relative group cursor-pointer h-64 bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950" style="transition-delay: 400ms;">
+                    <img src="https://images.unsplash.com/photo-1440407876336-62333a6f010f?auto=format&fit=crop&q=80&w=800" alt="Rìa Của Ánh Sáng context" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                </div>
+            </div>
+            <!-- Main Image -->
+            <div onclick="openAlbum('03')" tabindex="0" role="button" aria-label="Xem trọn bộ ảnh Rìa Của Ánh Sáng" class="fade-in-section w-full lg:w-2/3 h-[50vh] lg:h-[80vh] overflow-hidden relative group cursor-pointer bg-slate-100 dark:bg-slate-900 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950">
+                <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&q=80&w=1600" alt="Rìa Của Ánh Sáng" class="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" loading="lazy">
+                <div class="absolute inset-0 transition-colors duration-500 pointer-events-none bg-slate-950/0 group-hover:bg-slate-950/5 dark:group-hover:bg-slate-50/5"></div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="px-6 md:px-12 lg:px-24 py-24 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+        <div class="max-w-md">
+            <h2 class="fade-in-section font-serif text-3xl md:text-4xl mb-4">Cùng kể một câu chuyện mới.</h2>
+            <p class="fade-in-section text-sm leading-relaxed mb-8 text-slate-600 dark:text-slate-400">
+                Nếu bạn đang tìm kiếm một góc nhìn tĩnh lặng và sâu sắc cho dự án tiếp theo, hãy bắt đầu một cuộc trò chuyện.
+            </p>
+            <a href="mailto:hello@hoang.photo" class="fade-in-section group flex items-center gap-3 text-sm tracking-widest uppercase font-medium cursor-pointer hover:opacity-70 transition-all duration-300 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950 rounded-sm" style="transition-delay: 150ms;">
+                hello@hoang.photo
+                <svg class="group-hover:translate-x-2 transition-transform duration-300 motion-reduce:transition-none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        
+        <div class="fade-in-section flex gap-6 text-slate-500 dark:text-slate-400" style="transition-delay: 300ms;">
+            <a href="#" aria-label="Instagram" class="p-2 -m-2 rounded-md hover:text-slate-950 dark:hover:text-slate-50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" aria-label="Email" class="p-2 -m-2 rounded-md hover:text-slate-950 dark:hover:text-slate-50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+        </div>
+    </footer>
+
+    <!-- MODAL ALBUM (SHADCN Dialog Style) -->
+    <div id="album-modal" aria-modal="true" role="dialog" class="fixed inset-0 z-50 hidden flex-col bg-white dark:bg-slate-950 overflow-y-auto transition-opacity duration-300 opacity-0">
+        <!-- Header Modal -->
+        <div class="sticky top-0 z-10 w-full px-6 md:px-12 lg:px-24 py-6 md:py-8 flex justify-between items-center bg-white/90 dark:bg-slate-950/90 backdrop-blur-md">
+            <div>
+                <span id="modal-subtitle" class="text-xs tracking-[0.2em] font-medium text-slate-500 dark:text-slate-400 block mb-1"></span>
+                <h3 id="modal-title" class="font-serif text-2xl md:text-3xl text-slate-950 dark:text-slate-50"></h3>
+            </div>
+            <button onclick="closeAlbum()" aria-label="Đóng album" class="p-3 -mr-3 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-950 dark:hover:text-slate-50 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Masonry Grid -->
+        <div class="px-6 md:px-12 lg:px-24 pb-24 pt-8">
+            <div id="modal-gallery" class="columns-1 md:columns-2 lg:columns-3 gap-6 md:gap-8 space-y-6 md:space-y-8">
+                <!-- Images will be injected here via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- VANILLA JS LOGIC -->
+    <script>
+        // --- DATA CHO ALBUM ---
+        const albumData = {
+            '01': {
+                title: 'Sự Tĩnh Lặng Của Bóng Đổ',
+                subtitle: '01 — 2025',
+                images: [
+                    'https://images.unsplash.com/photo-1490604001847-b712b0c2f967?auto=format&fit=crop&q=80&w=1200',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000',
+                    'https://images.unsplash.com/photo-1481026469463-66327c86e544?auto=format&fit=crop&q=80&w=800',
+                ]
+            },
+            '02': {
+                title: 'Những Đường Nét Khuyết',
+                subtitle: '02 — 2024',
+                images: [
+                    'https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=1200',
+                    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1000',
+                    'https://images.unsplash.com/photo-1524311583145-d5593bd6aaab?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&q=80&w=800',
+                ]
+            },
+            '03': {
+                title: 'Rìa Của Ánh Sáng',
+                subtitle: '03 — 2024',
+                images: [
+                    'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&q=80&w=1200',
+                    'https://images.unsplash.com/photo-1440407876336-62333a6f010f?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000',
+                    'https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&q=80&w=800',
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=1000',
+                ]
+            }
+        };
+
+        // --- DARK MODE LOGIC ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Check local storage or system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // --- LAZY LOAD FADE-IN (INTERSECTION OBSERVER) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-section').forEach((section) => {
+                observer.observe(section);
+            });
+        });
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('album-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSubtitle = document.getElementById('modal-subtitle');
+        const modalGallery = document.getElementById('modal-gallery');
+
+        function openAlbum(id) {
+            const data = albumData[id];
+            if (!data) return;
+
+            // Populate text
+            modalTitle.textContent = data.title;
+            modalSubtitle.textContent = data.subtitle;
+
+            // Populate images (generate HTML strings)
+            modalGallery.innerHTML = data.images.map((imgSrc, idx) => `
+                <div class="break-inside-avoid relative group rounded-sm overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6 md:mb-8 last:mb-0">
+                    <img 
+                        src="${imgSrc}" 
+                        alt="${data.title} image ${idx + 1}"
+                        class="w-full h-auto object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                        loading="lazy"
+                    />
+                    <div class="absolute inset-0 transition-colors duration-500 pointer-events-none bg-slate-950/0 group-hover:bg-slate-950/5 dark:group-hover:bg-slate-50/5"></div>
+                </div>
+            `).join('');
+
+            // Hiển thị Modal với hiệu ứng Fade
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang nền
+            
+            // Timeout nhỏ để đảm bảo class 'hidden' bị gỡ ra trước khi transition opacity
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeAlbum() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Mở lại cuộn trang
+                modalGallery.innerHTML = ''; // Dọn dẹp DOM
+            }, 300); // Đợi transition chạy xong (300ms)
+        }
+
+        // Đóng Modal khi bấm phím ESC
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeAlbum();
+            }
+        });
+        
+        // --- XỬ LÝ ENTER KEY CHO KEYBOARD ACCESSIBILITY ---
+        document.querySelectorAll('[role="button"]').forEach(el => {
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    el.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
